@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Donor Dashboard - Charity Tracker{% endblock %}
+
+{% block content %}
+<!-- Dashboard Header -->
+<header class="dashboard-header mb-4">
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h1 class="h4 mb-0">
+                    <img src="{% static 'images/logo.png' %}" alt="Logo" class="me-2" style="height: 40px;">
+                    Charity Contribution Tracker
+                </h1>
+            </div>
+            <div class="col-md-6 text-end">
+                <div class="d-flex align-items-center justify-content-end gap-3">
+                    <div class="position-relative">
+                        <i class="fas fa-bell fs-5 text-muted"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            {{ notifications_count }}
+                        </span>
+                    </div>
+                    <img src="{{ user.profile.image.url }}" alt="User" class="user-avatar">
+                    <span class="d-none d-md-inline">{{ user.username }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Main Content -->
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2 class="h5">Welcome Back, {{ user.first_name }}</h2>
+            <p class="text-muted mb-0">Here's your donation summary</p>
+        </div>
+    </div>
+    
+    <!-- Stats Cards -->
+    <div class="row mb-4">
+        <div class="col-md-4 mb-3 mb-md-0">
+            <div class="card stat-card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">THIS MONTH</h5>
+                    <p class="card-value text-primary">${{ monthly_total }}</p>
+                    <p class="text-success small mb-0">
+                        <i class="fas fa-arrow-up me-1"></i> {{ monthly_change }}% from last month
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3 mb-md-0">
+            <div class="card stat-card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">UPCOMING DONATIONS</h5>
+                    <p class="card-value text-primary">{{ upcoming_donations|length }}</p>
+                    {% if upcoming_donations %}
+                    <p class="text-muted small mb-0">Next: ${{ upcoming_donations.0.amount }} to {{ upcoming_donations.0.recipient }} on {{ upcoming_donations.0.date }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card stat-card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">THIS WEEK</h5>
+                    <p class="card-value text-primary">{{ weekly_donations|length }}</p>
+                    {% if weekly_donations %}
+                    <p class="text-muted small mb-0">Recent: ${{ weekly_donations.0.amount }} to {{ weekly_donations.0.recipient }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Quick Actions and Mini Chart -->
+    <div class="row mb-4">
+        <div class="col-lg-8">
+            <div class="quick-actions mb-4">
+                <a href="{% url 'add_donation' %}" class="btn btn-maroon me-2 mb-2 mb-md-0">
+                    <i class="fas fa-plus me-1"></i> Add Donation
+                </a>
+                <a href="{% url 'set_reminder' %}" class="btn btn-outline-secondary me-2 mb-2 mb-md-0">
+                    <i class="fas fa-bell me-1"></i> Set Reminder
+                </a>
+                <a href="{% url 'generate_report' %}" class="btn btn-outline-secondary">
+                    <i class="fas fa-file-alt me-1"></i> Generate Report
+                </a>
+            </div>
+            
+            <div class="mini-chart">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h3 class="h6 mb-0">Donation Trends</h3>
+                    <select class="form-select form-select-sm w-auto" id="chart-period" disabled>
+                        <option value="6">Last 6 Months</option>
+                        <option value="12">This Year</option>
+                        <option value="24">Last Year</option>
+                    </select>
+                </div>
+                <!-- Static chart placeholder -->
+                <div style="height: 200px; background-color: #f8f9fa; display: flex; align-items: center; justify-content: center; border-radius: 4px;">
+                    <p class="text-muted">Chart will be displayed here</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="recent-activity p-3 h-100">
+                <h3 class="h6 mb-3">Recent Activity</h3>
+                
+                {% for donation in recent_donations %}
+                <div class="activity-item mb-3">
+                    <div class="d-flex justify-content-between">
+                        <strong>${{ donation.amount }} to {{ donation.recipient }}</strong>
+                        <span class="text-muted small">{{ donation.date }}</span>
+                    </div>
+                    <p class="small mb-0 text-muted">{{ donation.purpose }}</p>
+                </div>
+                {% endfor %}
+                
+                <a href="{% url 'donation_history' %}" class="d-block text-center mt-3 small text-primary">View All Activity</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<!-- Empty scripts block - can be removed if not needed -->
+{% endblock %}

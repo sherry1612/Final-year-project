@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome Page{% endblock %}
+
+{% block content %}
+<!-- Navigation Bar -->
+<nav class="navbar navbar-dark bg-dark fixed-top">
+  <div class="container-fluid d-flex justify-content-between align-items-center">
+    <!-- Menu button on the left -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <!-- Centered brand title -->
+    <a class="navbar-brand position-absolute start-50 translate-middle-x" href="#">CHARITY CONTRIBUTION TRACK</a>
+    
+    <!-- Empty spacer to balance the layout -->
+    <div style="width: 40px;"></div>
+    
+    <!-- Offcanvas menu (now on the left) -->
+    <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title">Menu</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+              Options
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark">
+              <li><a class="dropdown-item" href="#">Profile</a></li>
+              <li><a class="dropdown-item" href="#">Settings</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Logout</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Main Content -->
+<main class="container mt-5 pt-4">  <!-- Added padding-top to account for fixed navbar -->
+  <div class="row">
+    <div class="col-12 p-0">  <!-- Remove padding to allow full-width image -->
+      <div class="row g-0">  <!-- Removed card class and shadow -->
+        <!-- Image Section -->
+        <div class="col-md-4">
+          <img src="static\images\donationhome.jpg" class="img-fluid h-100" alt="Charity Image" style="object-fit: cover;">
+        </div>
+        
+        <!-- Content Section -->
+        <div class="col-md-8 bg-white p-4">  <!-- Added white background and padding -->
+          <div>
+            <h2 class="card-title display-2">Welcome to Charity Contribution Tracker</h2>
+            <p class="card-text lead">Track and manage all your charitable contributions in one place.</p>
+            <p class="card-text">Our platform helps you monitor your donations, set giving goals, and receive insights about your philanthropic activities. Get started today to make your charitable giving more impactful and organized.</p>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start mt-4">
+<a href="{% url 'login' %}" class="btn btn-primary me-md-2" style="background-color: maroon; border-color: maroon;" role="button">Get Started</a>          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}
