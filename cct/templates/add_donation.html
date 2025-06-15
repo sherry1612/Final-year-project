@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block title %}Add Donation - CharityTrack{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-xl-6 col-lg-8 col-md-10">
+            <div class="card border-0 shadow-lg overflow-hidden">
+                
+                <!-- Header -->
+                <div class="card-header py-4" style="background: linear-gradient(135deg, #3a7bd5 0%, #00d2ff 100%);">
+                    <div class="d-flex align-items-center justify-content-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="white" class="bi bi-heart-fill me-3" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                        </svg>
+                        <h2 class="text-center text-white mb-0">CharityTrack</h2>
+                    </div>
+                    <p class="text-center text-white-50 mb-0 mt-2">Add a new donation</p>
+                </div>
+                
+                <!-- Body -->
+                <div class="card-body p-5">
+                    {% if messages %}
+                        {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        <div class="row g-3">
+
+                            <!-- Full Name -->
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.FullName.id_for_label }}" class="form-label">Full Name</label>
+                                    {{ form.FullName }}
+                                    {% if form.FullName.errors %}
+                                        <div class="text-danger">{{ form.FullName.errors.0 }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <!-- Donation Date (date field) -->
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.Donation_date.id_for_label }}" class="form-label">Donation Date</label>
+                                    {{ form.Donation_date }}
+                                    {% if form.Donation_date.errors %}
+                                        <div class="text-danger">{{ form.Donation_date.errors.0 }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <!-- Type of Donation (choice field) -->
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.Type_of_Donation.id_for_label }}" class="form-label">Type of Donation</label>
+                                    {{ form.Type_of_Donation }}
+                                    {% if form.Type_of_Donation.errors %}
+                                        <div class="text-danger">{{ form.Type_of_Donation.errors.0 }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <!-- Donation Description -->
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.Donation_description.id_for_label }}" class="form-label">Donation Description</label>
+                                    {{ form.Donation_description }}
+                                    {% if form.Donation_description.errors %}
+                                        <div class="text-danger">{{ form.Donation_description.errors.0 }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <!-- Quantity -->
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.Quantity.id_for_label }}" class="form-label">Quantity</label>
+                                    {{ form.Quantity }}
+                                    {% if form.Quantity.errors %}
+                                        <div class="text-danger">{{ form.Quantity.errors.0 }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <!-- Purpose -->
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.Purpose.id_for_label }}" class="form-label">Purpose</label>
+                                    {{ form.Purpose }}
+                                    {% if form.Purpose.errors %}
+                                        <div class="text-danger">{{ form.Purpose.errors.0 }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <!-- Payment Method (choice field) -->
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.payment_method.id_for_label }}" class="form-label">Payment Method</label>
+                                    {{ form.payment_method }}
+                                    {% if form.payment_method.errors %}
+                                        <div class="text-danger">{{ form.payment_method.errors.0 }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="mt-4 text-center">
+                            <button type="submit" class="btn btn-primary px-4 py-2">Submit Donation</button>
+                        </div>
+                    </form>
+
+                    <hr class="my-4">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card { border-radius: 15px; overflow: hidden; }
+    .form-control:focus, .form-select:focus {
+        border-color: #86b7fe;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    }
+    .btn-primary {
+        background: linear-gradient(135deg, #3a7bd5 0%, #00d2ff 100%);
+        border: none;
+        transition: 0.3s ease;
+    }
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+</style>
+{% endblock %}

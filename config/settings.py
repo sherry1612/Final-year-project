@@ -32,17 +32,19 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'cct.apps.CctConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cct',
     
-
-
 ]
+
+
+AUTH_USER_MODEL = 'cct.CustomUser'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -56,9 +58,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'config.urls'
 
-
-
-AUTH_USER_MODEL = 'cct.CustomUser'
 
 
 
@@ -85,12 +84,15 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'charity_db',
-        'USER': 'django_user',
-        'PASSWORD': 'Ripher1612',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'Charity_db',
+        'USER': 'root',
+        'PASSWORD': '',
         'HOST': 'localhost',
-        'PORT': '5432',
+        'PORT': '3306',
+        'OPTIONS':{
+            'sql_mode':'STRICT_TRANS_TABLES,STRICT_ALL_TABLES',
+        },
 
     }
 }

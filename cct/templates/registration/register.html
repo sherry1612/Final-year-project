@@ -3,35 +3,52 @@
 {% block title %}Register - CharityTrack{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
+<div class="container py-5">
     <div class="row justify-content-center">
-        <div class="col-md-8 col-lg-6">
-            <div class="card shadow">
-                <div class="card-header bg-primary text-white">
-                    <h2 class="text-center">Create Your Account</h2>
+        <div class="col-xl-6 col-lg-8 col-md-10">
+            <div class="card border-0 shadow-lg overflow-hidden">
+                <!-- Card Header with Gradient Background -->
+                <div class="card-header py-4" style="background: linear-gradient(135deg, #3a7bd5 0%, #00d2ff 100%);">
+                    <div class="d-flex align-items-center justify-content-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="white" class="bi bi-heart-fill me-3" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                        </svg>
+                        <h2 class="text-center text-white mb-0">Join CharityTrack</h2>
+                    </div>
+                    <p class="text-center text-white-50 mb-0 mt-2">Create your account to start making a difference</p>
                 </div>
-                <div class="card-body">
+                
+                <!-- Card Body -->
+                <div class="card-body p-5">
                     {% if messages %}
-                    <div class="mb-3">
+                    <div class="mb-4">
                         {% for message in messages %}
-                        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
                         {% endfor %}
                     </div>
                     {% endif %}
 
-                    <form method="post" enctype="multipart/form-data">
+                    <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
                         {% csrf_token %}
                         
+                        <!-- Form Fields with Floating Labels -->
                         <div class="row g-3">
                             <!-- Username -->
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    {{ form.username }}
+                                    <input type="text" class="form-control rounded-3 {% if form.username.errors %}is-invalid{% endif %}" 
+                                           id="{{ form.username.id_for_label }}" name="{{ form.username.name }}" 
+                                           placeholder="Username" required>
                                     <label for="{{ form.username.id_for_label }}">Username</label>
                                     {% if form.username.errors %}
-                                    <div class="invalid-feedback d-block">
+                                    <div class="invalid-feedback">
                                         {{ form.username.errors.0 }}
                                     </div>
+                                    {% else %}
+                                    <div class="form-text">Choose a unique username</div>
                                     {% endif %}
                                 </div>
                             </div>
@@ -39,12 +56,16 @@
                             <!-- Email -->
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    {{ form.email }}
+                                    <input type="email" class="form-control rounded-3 {% if form.email.errors %}is-invalid{% endif %}" 
+                                           id="{{ form.email.id_for_label }}" name="{{ form.email.name }}" 
+                                           placeholder="Email" required>
                                     <label for="{{ form.email.id_for_label }}">Email</label>
                                     {% if form.email.errors %}
-                                    <div class="invalid-feedback d-block">
+                                    <div class="invalid-feedback">
                                         {{ form.email.errors.0 }}
                                     </div>
+                                    {% else %}
+                                    <div class="form-text">We'll never share your email</div>
                                     {% endif %}
                                 </div>
                             </div>
@@ -52,12 +73,20 @@
                             <!-- Passwords -->
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    {{ form.password1 }}
+                                    <input type="password" class="form-control rounded-3 {% if form.password1.errors %}is-invalid{% endif %}" 
+                                           id="{{ form.password1.id_for_label }}" name="{{ form.password1.name }}" 
+                                           placeholder="Password" required>
                                     <label for="{{ form.password1.id_for_label }}">Password</label>
-                                    <small class="text-muted">{{ form.password1.help_text }}</small>
                                     {% if form.password1.errors %}
-                                    <div class="invalid-feedback d-block">
+                                    <div class="invalid-feedback">
                                         {{ form.password1.errors.0 }}
+                                    </div>
+                                    {% else %}
+                                    <div class="password-strength mt-2">
+                                        <div class="progress" style="height: 5px;">
+                                            <div class="progress-bar" role="progressbar" style="width: 0%"></div>
+                                        </div>
+                                        <small class="text-muted">Password strength</small>
                                     </div>
                                     {% endif %}
                                 </div>
@@ -65,10 +94,12 @@
                             
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    {{ form.password2 }}
+                                    <input type="password" class="form-control rounded-3 {% if form.password2.errors %}is-invalid{% endif %}" 
+                                           id="{{ form.password2.id_for_label }}" name="{{ form.password2.name }}" 
+                                           placeholder="Confirm Password" required>
                                     <label for="{{ form.password2.id_for_label }}">Confirm Password</label>
                                     {% if form.password2.errors %}
-                                    <div class="invalid-feedback d-block">
+                                    <div class="invalid-feedback">
                                         {{ form.password2.errors.0 }}
                                     </div>
                                     {% endif %}
@@ -78,58 +109,158 @@
                             <!-- Personal Info -->
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    {{ form.first_name }}
+                                    <input type="text" class="form-control rounded-3" 
+                                           id="{{ form.first_name.id_for_label }}" name="{{ form.first_name.name }}" 
+                                           placeholder="First Name">
                                     <label for="{{ form.first_name.id_for_label }}">First Name</label>
                                 </div>
                             </div>
                             
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    {{ form.last_name }}
+                                    <input type="text" class="form-control rounded-3" 
+                                           id="{{ form.last_name.id_for_label }}" name="{{ form.last_name.name }}" 
+                                           placeholder="Last Name">
                                     <label for="{{ form.last_name.id_for_label }}">Last Name</label>
                                 </div>
                             </div>
                             
-                            <!-- Additional Fields -->
-                            <div class="col-md-6">
-                                <div class="form-floating mb-3">
-                                    {{ form.phone }}
-                                    <label for="{{ form.phone.id_for_label }}">Phone Number</label>
-                                </div>
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <div class="form-floating mb-3">
-                                    {{ form.birth_date }}
-                                    <label for="{{ form.birth_date.id_for_label }}">Birth Date</label>
-                                </div>
-                            </div>
-                            
-                            <!-- Profile Picture -->
+                            <!-- Phone Number -->
                             <div class="col-12">
-                                <div class="mb-3">
-                                    <label for="{{ form.profile_picture.id_for_label }}" class="form-label">
-                                        Profile Picture (Optional)
+                                <div class="form-floating mb-3">
+                                    <input type="tel" class="form-control rounded-3" 
+                                           id="{{ form.phone.id_for_label }}" name="{{ form.phone.name }}" 
+                                           placeholder="Phone Number">
+                                    <label for="{{ form.phone.id_for_label }}">Phone Number</label>
+                                    <div class="form-text">Optional - for important notifications</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Terms and Conditions -->
+                            <div class="col-12">
+                                <div class="form-check mb-4">
+                                    <input class="form-check-input" type="checkbox" id="termsCheck" required>
+                                    <label class="form-check-label small" for="termsCheck">
+                                        I agree to the <a href="#" class="text-primary">Terms of Service</a> and <a href="#" class="text-primary">Privacy Policy</a>
                                     </label>
-                                    {{ form.profile_picture }}
+                                    <div class="invalid-feedback">
+                                        You must agree before submitting.
+                                    </div>
                                 </div>
                             </div>
                             
                             <!-- Submit Button -->
                             <div class="col-12">
-                                <button type="submit" class="btn btn-primary w-100 py-3">
-                                    Register
+                                <button type="submit" class="btn btn-primary btn-lg w-100 py-3 rounded-pill shadow">
+                                    <i class="bi bi-person-plus-fill me-2"></i> Create Account
                                 </button>
                             </div>
                         </div>
                     </form>
                     
-                    <div class="text-center mt-4">
-                        <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+                    <!-- Divider -->
+                    <div class="position-relative my-4">
+                        <hr>
+                        <div class="position-absolute top-50 start-50 translate-middle bg-white px-3 text-muted">OR</div>
+                    </div>
+                    
+                    <!-- Social Login -->
+                    <div class="row g-2 mb-4">
+                        <div class="col-md-6">
+                            <a href="#" class="btn btn-outline-primary w-100 rounded-pill">
+                                <i class="bi bi-google me-2"></i> Sign up with Google
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="#" class="btn btn-outline-primary w-100 rounded-pill">
+                                <i class="bi bi-facebook me-2"></i> Sign up with Facebook
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Login Link -->
+                    <div class="text-center">
+                        <p class="mb-0">Already have an account? <a href="{% url 'login' %}" class="text-primary fw-bold">Sign in</a></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Password Strength Indicator Script -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const passwordInput = document.getElementById('{{ form.password1.id_for_label }}');
+    const progressBar = document.querySelector('.progress-bar');
+    
+    if (passwordInput && progressBar) {
+        passwordInput.addEventListener('input', function() {
+            const strength = calculatePasswordStrength(this.value);
+            progressBar.style.width = strength.percentage + '%';
+            progressBar.className = 'progress-bar bg-' + strength.color;
+        });
+    }
+    
+    function calculatePasswordStrength(password) {
+        let score = 0;
+        if (!password) return { percentage: 0, color: 'danger' };
+        
+        // Length
+        if (password.length > 5) score++;
+        if (password.length > 8) score++;
+        if (password.length > 12) score++;
+        
+        // Complexity
+        if (/[A-Z]/.test(password)) score++;
+        if (/[0-9]/.test(password)) score++;
+        if (/[^A-Za-z0-9]/.test(password)) score++;
+        
+        // Calculate percentage and color
+        const percentage = Math.min(100, score * 20);
+        let color = 'danger';
+        if (percentage >= 60) color = 'warning';
+        if (percentage >= 80) color = 'success';
+        
+        return { percentage, color };
+    }
+});
+</script>
+
+<style>
+    /* Custom styles */
+    .card {
+        border-radius: 15px;
+        overflow: hidden;
+    }
+    
+    .form-control {
+        transition: all 0.3s;
+        border: 1px solid #dee2e6;
+    }
+    
+    .form-control:focus {
+        border-color: #86b7fe;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    }
+    
+    .btn-primary {
+        background: linear-gradient(135deg, #3a7bd5 0%, #00d2ff 100%);
+        border: none;
+        transition: all 0.3s;
+    }
+    
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .invalid-feedback {
+        font-size: 0.85rem;
+    }
+    
+    .progress {
+        background-color: #e9ecef;
+    }
+</style>
 {% endblock %}
